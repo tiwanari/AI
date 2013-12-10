@@ -1,0 +1,180 @@
+\relax 
+\citation{ref:labeling}
+\citation{ref:labeling}
+\citation{ref:labeling}
+\citation{ref:labeling}
+\@writefile{toc}{\contentsline {section}{\numberline {1}概略}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}作成したプログラムの仕様}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}テキスト入力による解釈}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 頂点の分類と入力順}}{1}}
+\newlabel{fig:labeling}{{1}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 図形の入力例}}{2}}
+\newlabel{fig:example}{{2}{2}}
+\newlabel{code:example}{{1}{2}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}ラベリング情報の入力例}{2}}
+\newlabel{code:border}{{2}{2}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}境界の入力例}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}画像入力による解釈}{2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 画像の入力例}}{2}}
+\newlabel{fig:example_image}{{3}{2}}
+\citation{ref:opecv_manager}
+\citation{ref:opencv_honke}
+\citation{ref:opecv_manager}
+\citation{ref:dropbox}
+\citation{ref:file_transfer}
+\citation{ref:astro}
+\citation{ref:android_dev}
+\citation{ref:opencv_android}
+\@writefile{toc}{\contentsline {section}{\numberline {3}実行環境}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}実行の準備}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}OpenCV Managerのインストール}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}本アプリケーションのインストール}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}本アプリケーションのコンパイル}{3}}
+\citation{ref:file_explorer}
+\@writefile{toc}{\contentsline {section}{\numberline {5}アプリケーションの使い方}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 起動時の画面}}{4}}
+\newlabel{fig:photo}{{4}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}画像の解析}{4}}
+\newlabel{sec:how_to_use_image_analysis}{{5.1}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces ファイルエクスプローラ}}{5}}
+\newlabel{fig:file_select}{{5}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}テキストの解析}{5}}
+\citation{ref:opencv_api}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces メニュー}}{6}}
+\newlabel{fig:menu}{{6}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces テキスト解析の画面}}{6}}
+\newlabel{fig:text}{{7}{6}}
+\citation{ref:thinning}
+\@writefile{toc}{\contentsline {section}{\numberline {6}アプリケーションの構成とアルゴリズム\cite  {ref:opencv_api}}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces アプリケーションの構成図}}{7}}
+\newlabel{fig:composition}{{8}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Preprocessor}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Preprocessorの概要}}{7}}
+\newlabel{fig:preprocessor}{{9}{7}}
+\newlabel{code:findContours}{{3}{7}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}findContours関数}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Decorder}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Decorderの概要}}{8}}
+\newlabel{fig:decorder}{{10}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}頂点の取得}{8}}
+\newlabel{code:goodFeaturesToTrack}{{4}{8}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}goodFeaturesToTrack関数}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}辺の取得}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces 境界の様子}}{8}}
+\newlabel{fig:contours}{{11}{8}}
+\citation{ref:labeling}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}辺の分類}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces 2次元の外積}}{9}}
+\newlabel{fig:outer}{{12}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Y，A，Tの分類}}{9}}
+\newlabel{fig:classifying}{{13}{9}}
+\citation{ref:labeling}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Analyzer}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}頂点と辺の登録}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces L，Y，A，Tのさらなる分類とラベル(\cite  {ref:labeling}より引用)}}{10}}
+\newlabel{fig:reference}{{14}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}候補の決定}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Colorer}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}実験方法}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}テキスト入力による実験}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}描画ソフトによる画像の入力に依る実験}{12}}
+\newlabel{fig:sample0}{{15(a)}{12}}
+\newlabel{sub@fig:sample0}{{(a)}{12}}
+\newlabel{fig:sample1}{{15(b)}{12}}
+\newlabel{sub@fig:sample1}{{(b)}{12}}
+\newlabel{fig:sample2}{{15(c)}{12}}
+\newlabel{sub@fig:sample2}{{(c)}{12}}
+\newlabel{fig:sample3}{{15(d)}{12}}
+\newlabel{sub@fig:sample3}{{(d)}{12}}
+\newlabel{fig:sample4}{{15(e)}{12}}
+\newlabel{sub@fig:sample4}{{(e)}{12}}
+\newlabel{fig:sample5}{{15(f)}{12}}
+\newlabel{sub@fig:sample5}{{(f)}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces 入力した画像}}{12}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {sample0}}}{12}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {sample1}}}{12}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {sample2}}}{12}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {sample3}}}{12}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(e)}{\ignorespaces {sample4}}}{12}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(f)}{\ignorespaces {sample5}}}{12}}
+\newlabel{fig:input}{{15}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}写真画像の入力に依る実験}{12}}
+\newlabel{fig:pic0}{{16(a)}{13}}
+\newlabel{sub@fig:pic0}{{(a)}{13}}
+\newlabel{fig:pic1}{{16(b)}{13}}
+\newlabel{sub@fig:pic1}{{(b)}{13}}
+\newlabel{fig:pic2}{{16(c)}{13}}
+\newlabel{sub@fig:pic2}{{(c)}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces 入力した写真画像}}{13}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {picture0}}}{13}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {picture1}}}{13}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {picture2}}}{13}}
+\newlabel{fig:input_pic}{{16}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}実験結果}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}テキスト入力による実験の結果}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces テキスト入力の結果}}{13}}
+\newlabel{fig:res_text}{{17}{13}}
+\newlabel{code:text_analysis}{{5}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}テキスト入力の結果}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}描画ソフトによる画像の入力に依る実験の結果}{14}}
+\newlabel{fig:sample0_res}{{18(a)}{15}}
+\newlabel{sub@fig:sample0_res}{{(a)}{15}}
+\newlabel{fig:sample1_res}{{18(b)}{15}}
+\newlabel{sub@fig:sample1_res}{{(b)}{15}}
+\newlabel{fig:sample2_res}{{18(c)}{15}}
+\newlabel{sub@fig:sample2_res}{{(c)}{15}}
+\newlabel{fig:sample3_res}{{18(d)}{15}}
+\newlabel{sub@fig:sample3_res}{{(d)}{15}}
+\newlabel{fig:sample4_res}{{18(e)}{15}}
+\newlabel{sub@fig:sample4_res}{{(e)}{15}}
+\newlabel{fig:sample5_res}{{18(f)}{15}}
+\newlabel{sub@fig:sample5_res}{{(f)}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces 入力した画像の解釈結果}}{15}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {sample0}}}{15}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {sample1}}}{15}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {sample2}}}{15}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {sample3}}}{15}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(e)}{\ignorespaces {sample4}}}{15}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(f)}{\ignorespaces {sample5}}}{15}}
+\newlabel{fig:res_image}{{18}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}写真画像の入力に依る実験の結果}{15}}
+\citation{ref:labeling}
+\newlabel{fig:pic0_non_res}{{19(a)}{16}}
+\newlabel{sub@fig:pic0_non_res}{{(a)}{16}}
+\newlabel{fig:pic0_res}{{19(b)}{16}}
+\newlabel{sub@fig:pic0_res}{{(b)}{16}}
+\newlabel{fig:pic1_non_res}{{19(c)}{16}}
+\newlabel{sub@fig:pic1_non_res}{{(c)}{16}}
+\newlabel{fig:pic1_res}{{19(d)}{16}}
+\newlabel{sub@fig:pic1_res}{{(d)}{16}}
+\newlabel{fig:pic2_res}{{19(e)}{16}}
+\newlabel{sub@fig:pic2_res}{{(e)}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces 入力した写真画像の解釈結果}}{16}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {picture0に下処理を行わなかった場合}}}{16}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {picture0に下処理を行った場合}}}{16}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {picture1に下処理を行わなかった場合}}}{16}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {picture1に下処理を行った場合}}}{16}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(e)}{\ignorespaces {picture2に下処理を行った場合}}}{16}}
+\newlabel{fig:res_pic}{{19}{16}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}考察}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}テキスト入力による実験の考察}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}描画ソフトによる画像の入力に依る実験の考察}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces ネッカーキューブの解釈}}{17}}
+\newlabel{fig:necker}{{20}{17}}
+\citation{ref:labeling}
+\bibcite{ref:labeling}{1}
+\bibcite{ref:opencv_honke}{2}
+\bibcite{ref:opecv_manager}{3}
+\bibcite{ref:dropbox}{4}
+\bibcite{ref:file_transfer}{5}
+\bibcite{ref:astro}{6}
+\bibcite{ref:android_dev}{7}
+\bibcite{ref:opencv_android}{8}
+\bibcite{ref:file_explorer}{9}
+\bibcite{ref:opencv_api}{10}
+\bibcite{ref:thinning}{11}
+\bibcite{ref:harris}{12}
+\bibcite{ref:outer}{13}
+\bibcite{ref:book}{14}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}写真画像の入力に依る実験の考察}{18}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}結論}{18}}

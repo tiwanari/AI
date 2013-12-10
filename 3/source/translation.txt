@@ -1,0 +1,21 @@
+(MATCH x1
+	FROM	(ABOVE  x1 x5)
+	TO	(INSIDE x5 x1)
+	WITH	((TRANS  10.0 0 N T))
+
+(REMOVE x2
+	WHERE	(LEFT x5 x2))
+
+(REMOVE x3
+	WHERE	(LEFT x5 x3))
+
+(REMOVE x4
+	WHERE	(LEFT x4 x5))
+
+(MATCH x5
+	FROM	((ABOVE x1  x5)
+		 (LEFT  x5  x2)
+		 (ABOVE x5  x3)
+		 (LEFT  x4  x5))
+	TO	(INSIDE x5  x1)
+	WITH	(TRANS  0.5 0 N T))

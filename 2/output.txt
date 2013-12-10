@@ -1,0 +1,24 @@
+[1]> (load "atms.lisp")
+;; Loading file atms.lisp ...
+;; Loaded file atms.lisp
+T
+[2]> (load "nqueen.lisp")
+;; Loading file nqueen.lisp ...
+;; Loaded file nqueen.lisp
+T
+[3]> (n-queens 1)
+1
+[4]> (n-queens 2)
+0
+[5]> (n-queens 3)
+0
+[6]> (n-queens 4)
+2
+[7]> (n-queens 5)
+10
+[8]> (n-queens 6)
+4
+[9]> (n-queens 7)
+40
+[10]> (n-queens 8)
+92
