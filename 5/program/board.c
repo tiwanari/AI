@@ -2,32 +2,90 @@
 #include "board.h"
 
 /**
+ * 盤面を初期化する
+ * @param stone_t board[][] 初期化する盤面
+ */
+void init_board(stone_t board[HIGHT][AREA])
+{
+	int i, j;
+	for (i = 0; i < HIGHT; i++) {
+		for (j = 0; j < AREA; j++) {
+			board[i][j] = NONE;
+		}
+	}
+}
+
+/**
+ * 平面を表示(debug用)
+ * @param stone_t plane[] 平面
+ */
+void print_plane(const stone_t plane[AREA])
+{
+	int i;
+	for (i = 0; i < AREA; i++) {
+		printf("%s|", get_stone_image(plane[i]));
+		if ((i+1) % WIDTH == 0)	printf("\n");
+	}
+}
+
+/**
+ * ボードを上から表示
+ * @param stone_t board[][] 盤面
+ */
+void print_board(const stone_t board[HIGHT][AREA])
+{
+	int i;
+
+	for (i = HIGHT - 1; i >= 0; i--) {
+		printf("---%2d段目---\n", i + 1);
+		print_plane(board[i]);
+	}
+}
+
+/**
  * 指定した位置におけるか
  * @param int pos
  * @param stone_t board[][]
  * @return int ture:1, false:0
  */
-int is_movable(int pos, stone_t board[][])
+int is_putable(int pos, const stone_t board[HIGHT][AREA])
 {
 	return board[3][pos] == NONE;
 }
 
 /**
+ * 指定した位置に配置
+ * @param int pos
+ * @param stone_t board[][]
+ * @return int 置いた層
+ */
+int put_stone(int pos, stone_t color, stone_t board[HIGHT][AREA])
+{
+	int i;
+	for (i = 0; i < HIGHT; i++) {
+		if (board[i][pos] == NONE) {
+			board[i][pos] = color;
+			break;
+		}
+	}
+	return i;
+}
+
+/**
  * 合法手を作る
  * @param stone_t board[][] 盤面
- * @param int moves[AREA] 合法手の格納先
+ * @param int hands[AREA] 合法手の格納先
  * @return int 合法手の数
  */
-int get_legal_moves(stone_t board[][], int moves[AREA])
+int get_legal_hands(const stone_t board[HIGHT][AREA], int hands[AREA])
 {
 	int count = 0;
 	int i;
 
 	for (i = 0; i < AREA; i++) {
 		if (board[3][i] == NONE)
-			moves[count++] = i;
+			hands[count++] = i;
 	}
-
 	return count;
 }
 
@@ -42,18 +100,46 @@ int is_on_diagonal_line(int pos)
 }
 
 /**
+ * 全て埋まっているか
+ * @param stone_t board[][] 盤面
+ * @return int true:1, false:0
+ */
+int is_full(const stone_t board[HIGHT][AREA])
+{
+	int i;
+
+	for (i = 0; i < AREA; i++)
+		if (board[3][i] == NONE)
+			return 0;
+
+	return 1;
+}
+
+/**
+ * 盤面のコピー
+ * @param stone_t board[][] コピー元
+ * @param stone_t dest[][] コピー先
+ */
+void copy_board(const stone_t board[HIGHT][AREA], stone_t dest[HIGHT][AREA])
+{
+	int i, j;
+	for (i = 0; i < HIGHT; i++)
+		for (j = 0; j < AREA; j++)
+			dest[i][j] = board[i][j];
+}
+
+/**
  * 盤面の対角線方向の面を返す
- * @param int layer 対象の位置(高さ)
  * @param int pos 対象の位置(平面)
  * @param stone_t board[][] 盤面
  * @param stone_t dest[] 結果の面
  */
-void copy_board_diagonally(int layer, int pos, stone_t board[][], stone_t dest[])
+void copy_board_diagonally(int pos, const stone_t board[HIGHT][AREA], stone_t dest[AREA])
 {
 	int i, j;
-
+	
 	if (pos % 5 == 0) {
-		// 0, 5, 10, 15を見る
+		// 0, 5, 10, 15をコピー
 		for (i = 0; i < HIGHT; i++) {
 			for (j = 0; j < 4; j++) {
 				int index = 5 * j;
@@ -62,11 +148,11 @@ void copy_board_diagonally(int layer, int pos, stone_t board[][], stone_t dest[]
 		}
 	}
 	else if (pos % 3 == 0) {
-		// 3, 6, 9, 12を見る
+		// 3, 6, 9, 12をコピー
 		for (i = 0; i < HIGHT; i++) {
 			for (j = 1; j <= 4; j++) {
 				int index = 3 * j;
-				dest[i * 4 + j] = board[i][index]; 
+				dest[i * 4 + (j-1)] = board[i][index]; 
 			}
 		}
 	}
@@ -74,12 +160,11 @@ void copy_board_diagonally(int layer, int pos, stone_t board[][], stone_t dest[]
 
 /**
  * 盤面の横方向の面を返す
- * @param int layer 対象の位置(高さ)
  * @param int pos 対象の位置(平面)
  * @param stone_t board[][] 盤面
  * @param stone_t dest[] 結果の面
  */
-stone_t *copy_board_latitudinally(int layer, int pos, stone_t board[][], stone_t dest[])
+void copy_board_latitudinally(int pos, const stone_t board[HIGHT][AREA], stone_t dest[AREA])
 {
 	int i, j;
 	for (i = 0; i < HIGHT; i++) {
@@ -92,17 +177,16 @@ stone_t *copy_board_latitudinally(int layer, int pos, stone_t board[][], stone_t
 
 /**
  * 盤面の縦方向の面を返す
- * @param int layer 対象の位置(高さ)
  * @param int pos 対象の位置(平面)
  * @param stone_t board[][] 盤面
  * @param stone_t dest[] 結果の面
  */
-stone_t *copy_board_longitudinally(int layer, int pos, stone_t board[][], stone_t dest[])
+void copy_board_longitudinally(int pos, const stone_t board[HIGHT][AREA], stone_t dest[AREA])
 {
 	int i, j;
 	for (i = 0; i < HIGHT; i++) {
 		for (j = 0; j < DEPTH; j++) {
-			int index = (pos / 4) * 4 + j;
+			int index = (pos % 4) + 4 * j;
 			dest[i * 4 + j] = board[i][index];
 		}
 	}
@@ -115,11 +199,10 @@ stone_t *copy_board_longitudinally(int layer, int pos, stone_t board[][], stone_
  * @param stone_t plane[] 平面
  * @return int win:1, other:0
  */
-int check_win(int pos, stone_t color, stone_t plane[])
+int check_win_plane(int pos, stone_t color, const stone_t plane[AREA])
 {
 	int win;
 	int i;
-
 
 	// 斜めの処理
 	if (pos % 5 == 0) {
@@ -173,33 +256,68 @@ int check_win(int pos, stone_t color, stone_t plane[])
 }
 
 /**
- * ボードを上から表示
+ * ゲームが終了したかを調べる
+ * @param int layer 置いたの位置(高さ)
+ * @param int pos 置いたの位置(平面)
+ * @param stone_t color 置いた色
  * @param stone_t board[][] 盤面
+ * @return int true:1, false:0
  */
-void print_board(stone_t board[][])
+int check_win(int layer, int pos, stone_t color, const stone_t board[HIGHT][AREA])
 {
-	int i, j;
+	stone_t temp[AREA];
+	int trans_pos;	// 平面に分けた時の位置
+	
+	// 平面のチェック
+	if (check_win_plane(pos, color, board[layer]))
+		return 1;
 
-	for (i = HIGHT - 1; i >= 0; i--) {
-		printf("-----%2d段目-----\n", i + 1);
-		printf("|\n");
-		for (j = 0; j < AREA; j++) {
-			switch (board[i][j]) {
-				case NONE:
-					printf(" |");
-					break;
-				case BLACK:
-					printf("0|");
-					break;
-				case WHITE:
-					printf("O|\n");
-					break;
-			}
-			if (j % 4 == 0)	printf("\n");
-		}
-		printf("\n");
+	// 斜めのチェック
+	if (is_on_diagonal_line(pos)) {
+		copy_board_diagonally(pos, board, temp);
+		if (pos % 5 == 0)
+			trans_pos = layer * 4 + pos / 5;
+		else
+			trans_pos = layer * 4 + pos / 3 - 1;
+		if (check_win_plane(trans_pos, color, temp))
+			return 1;
 	}
+	
+	// 横のチェック
+	copy_board_latitudinally(pos, board, temp);
+	trans_pos = layer * 4 + pos % 4;
+	if (check_win_plane(trans_pos, color, temp))
+		return 1;
+
+	// 縦のチェック
+	copy_board_longitudinally(pos, board, temp);
+	trans_pos = layer * 4 + pos / 4;
+	if (check_win_plane(trans_pos, color, temp))
+		return 1;
+
+	return 0;
 }
+
+/**
+ * 石のイメージを返す
+ * @param stone_t color 石の色
+ * @return char* 文字列表現
+ */
+char* get_stone_image(stone_t color)
+{
+	switch (color) {
+		case NONE:
+			return "  ";
+		case BLACK:
+			return "0 ";
+		case WHITE:
+			return "O ";
+	}
+	return "  ";
+}
+
+
+
 
 
 
