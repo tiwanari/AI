@@ -34,11 +34,20 @@ int is_putable(int pos, const stone_t board[HIGHT][AREA]);
 
 /**
  * 指定した位置に配置
- * @param int pos
+ * @param int pos 置く位置
+ * @param stone_t color 置く色
  * @param stone_t board[][]
  * @return int 置いた層
  */
 int put_stone(int pos, stone_t color, stone_t board[HIGHT][AREA]);
+
+/**
+ * 指定した位置の石を取り出す(Undo)
+ * @param int pos 取り出す位置
+ * @param stone_t board[][]
+ * @return int 取り除いた層
+ */
+int pick_stone(int pos, stone_t board[HIGHT][AREA]);
 
 /**
  * 合法手を作る
@@ -71,6 +80,15 @@ void copy_board(const stone_t board[HIGHT][AREA], stone_t dest[HIGHT][AREA]);
  * @return int true:1, false:0
  */
 int check_win(int layer, int pos, stone_t color, const stone_t board[HIGHT][AREA]);
+
+/**
+ * ゲームオーバーの手か
+ * @param int pos 手
+ * @param stone_t turn 現在の手番
+ * @param stone_t board[][] 盤面
+ * @return int true:1, false:0
+ */
+int is_terminate_hand(int pos, stone_t turn, const stone_t board[HIGHT][AREA]);
 
 /**
  * 石のイメージを返す

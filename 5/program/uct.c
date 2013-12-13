@@ -5,8 +5,8 @@
 #include "board.h"
 
 int PLAYOUT_MAX;
-int EXPAND_THRESHOLD;
-double C;
+int EXPAND_THRESHOLD = 1000;
+double C = 2.5;
 
 /**
  * ノードを作成して返す
@@ -42,30 +42,12 @@ void free_nodes(node_t mother)
 }
 
 /**
- * ゲームオーバーの手か
- * @param int pos 手
- * @param stone_t turn 現在の手番
- * @param stone_t board[][] 盤面
- * @return true:1, false:0
- */
-int is_terminate_hand(int pos, stone_t turn, const stone_t board[HIGHT][AREA])
-{
-	stone_t copy[HIGHT][AREA];
-	int layer;
-	copy_board(board, copy);
-
-	layer = put_stone(pos, turn, copy);
-
-	return check_win(layer, pos, turn, copy) || is_full(copy);
-}
-
-/**
  * プレイアウトを行うシミュレーション関数
  * @param int first 初めの手
  * @param stone_t mycolor 自分の色
  * @param stone_t turn 現在の手番
  * @param stone_t board[][] 盤面
- * @return win:1, other:0
+ * @return int win:1, other:0
  */
 int playout(int first, stone_t mycolor, stone_t turn, stone_t board[HIGHT][AREA])
 {
@@ -145,6 +127,7 @@ void expand_child(node_t mother, stone_t mycolor, stone_t turn, const stone_t bo
 	// 展開済みなら終了
 	if (mother->nchildren != 0) return ;
 
+	// 合法手の取得
 	mother->nchildren = get_legal_hands(board, hands);
 
 	for (i = 0; i < mother->nchildren; i++) {
@@ -240,7 +223,6 @@ int uct(stone_t turn, const stone_t board[HIGHT][AREA])
 		double winning_rate
 			= (double)root->children[i]->win / root->children[i]->playout;
 
-		printf("pos(%2d):%f\n", i, winning_rate);
 		if (best_rate < winning_rate) {
 			best_rate = winning_rate;
 			best_hand = root->children[i]->pos;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "board.h"
 
 /**
@@ -7,12 +8,12 @@
  */
 void init_board(stone_t board[HIGHT][AREA])
 {
-	int i, j;
-	for (i = 0; i < HIGHT; i++) {
-		for (j = 0; j < AREA; j++) {
-			board[i][j] = NONE;
-		}
-	}
+	// int i, j;
+	// for (i = 0; i < HIGHT; i++)
+	// 	for (j = 0; j < AREA; j++)
+	// 		board[i][j] = NONE;
+
+	memset(board, NONE, sizeof(stone_t) * HIGHT * AREA);
 }
 
 /**
@@ -55,7 +56,8 @@ int is_putable(int pos, const stone_t board[HIGHT][AREA])
 
 /**
  * 指定した位置に配置
- * @param int pos
+ * @param int pos 置く位置
+ * @param stone_t color 置く色
  * @param stone_t board[][]
  * @return int 置いた層
  */
@@ -65,6 +67,24 @@ int put_stone(int pos, stone_t color, stone_t board[HIGHT][AREA])
 	for (i = 0; i < HIGHT; i++) {
 		if (board[i][pos] == NONE) {
 			board[i][pos] = color;
+			break;
+		}
+	}
+	return i;
+}
+
+/**
+ * 指定した位置の石を取り出す(Undo)
+ * @param int pos 取り出す位置
+ * @param stone_t board[][]
+ * @return int 取り除いた層
+ */
+int pick_stone(int pos, stone_t board[HIGHT][AREA])
+{
+	int i;
+	for (i = HIGHT - 1; i >= 0; i--) {
+		if (board[i][pos] != NONE) {
+			board[i][pos] = NONE;
 			break;
 		}
 	}
@@ -82,10 +102,10 @@ int get_legal_hands(const stone_t board[HIGHT][AREA], int hands[AREA])
 	int count = 0;
 	int i;
 
-	for (i = 0; i < AREA; i++) {
+	for (i = 0; i < AREA; i++)
 		if (board[3][i] == NONE)
 			hands[count++] = i;
-	}
+
 	return count;
 }
 
@@ -122,10 +142,12 @@ int is_full(const stone_t board[HIGHT][AREA])
  */
 void copy_board(const stone_t board[HIGHT][AREA], stone_t dest[HIGHT][AREA])
 {
-	int i, j;
-	for (i = 0; i < HIGHT; i++)
-		for (j = 0; j < AREA; j++)
-			dest[i][j] = board[i][j];
+	// int i, j;
+	// for (i = 0; i < HIGHT; i++)
+	// 	for (j = 0; j < AREA; j++)
+	// 		dest[i][j] = board[i][j];
+
+	memcpy(dest, board, sizeof(stone_t) * HIGHT * AREA);
 }
 
 /**
@@ -296,6 +318,24 @@ int check_win(int layer, int pos, stone_t color, const stone_t board[HIGHT][AREA
 		return 1;
 
 	return 0;
+}
+
+/**
+ * ゲームオーバーの手か
+ * @param int pos 手
+ * @param stone_t turn 現在の手番
+ * @param stone_t board[][] 盤面
+ * @return int true:1, false:0
+ */
+int is_terminate_hand(int pos, stone_t turn, const stone_t board[HIGHT][AREA])
+{
+	stone_t copy[HIGHT][AREA];
+	int layer;
+	copy_board(board, copy);
+
+	layer = put_stone(pos, turn, copy);	// 置いてみる
+
+	return check_win(layer, pos, turn, copy) || is_full(copy);
 }
 
 /**

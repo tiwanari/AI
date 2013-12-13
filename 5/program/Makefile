@@ -1,6 +1,6 @@
 CC=gcc
-OBJS=main.o board.o uct.o
-CFLAGS=-g -Wall
+OBJS=main.o board.o uct.o negamax.o
+CFLAGS=-Wall -O3
 TARGET=main
 
 all: $(TARGET)

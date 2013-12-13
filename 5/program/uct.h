@@ -4,14 +4,14 @@
 #include "board.h"
 
 // #define PLAYOUT_MAX 20000
-// #define EXPAND_THRESHOLD 10
-// #define C 1.0
+// #define EXPAND_THRESHOLD 1000
+// #define C 2.5
 
 #define ucb(x, n, ni) ((x) + C * sqrt(2 * log(n)/(ni)))
 
 #define INIFINITY 100000.0
 
-// 盤面
+// 木のノード
 typedef struct node {
 	struct node* moth;				// 親
 	struct node* children[AREA];	// 子供(最大AREA)
