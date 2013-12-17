@@ -82,7 +82,10 @@ int main(int argc, char **argv)
 	// 手番を選ぶ
 	turn = (argc > 1 && argv[1][0] != '0') ? WHITE : BLACK;
 	// プレイアウト回数
-	PLAYOUT_MAX = argc > 2 ? atoi(argv[1]) : 10000;
+	// PLAYOUT_MAX = argc > 2 ? atoi(argv[1]) : 10000;	// ここが間違ってました
+	PLAYOUT_MAX = argc > 2 ? atoi(argv[2]) : 10000;
+
+	printf("PLAYOUT_MAX: %d\n", PLAYOUT_MAX);
 
 	init_board(board);	// 盤面の初期化
 	print_board(board);	// 初期盤面
@@ -92,7 +95,7 @@ int main(int argc, char **argv)
 			pos = input_move(turn, board);	// 入力
 		}
 		else {
-			// DEPTH_MAX = argc > 1 ? atoi(argv[1]) : 5;
+			// DEPTH_MAX = argc > 2 ? atoi(argv[2]) : 5;
 			// pos = negamax(turn, board);
 
 			pos = uct(turn, board);
