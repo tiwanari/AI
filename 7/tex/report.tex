@@ -1,0 +1,213 @@
+\documentclass{jarticle}
+\usepackage{mathtools, multicol}
+\usepackage{color}
+\usepackage{url}
+\usepackage{comment}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings, jlisting}
+\usepackage{latexsym}
+\usepackage{subfigure}
+
+\renewcommand{\lstlistingname}{リスト}
+
+\lstdefinestyle{customplain}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=tRBl,
+  xleftmargin=\parindent,
+  language=,
+  showstringspaces=false,
+  numbers=left,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{black},
+  commentstyle=\itshape\color{black},
+  identifierstyle=\color{black},
+  stringstyle=\color{black},
+}
+
+% 余白の設定
+\usepackage[top=20truemm, bottom=16truemm, left=10truemm, right=10truemm]{geometry}
+
+% 図の挿入
+\usepackage[dvipdfm]{graphicx}
+
+% より複雑な数学記号
+\usepackage{amsmath,amssymb}
+
+% 図の通し番号
+\usepackage{subfigure}
+
+\newcommand{\todayd}{%
+\the\year.{\ifnum \month < 10 0\the\month \else \the\month \fi}.%
+{\ifnum \day < 10 0\the\day \else \the\day \fi}}
+
+
+\makeatletter
+
+\def\@thesis{人工知能}
+\def\id#1{\def\@id{#1}}
+\def\department#1{\def\@department{#1}}
+
+\def\@maketitle{
+	\begin{center}
+		{\huge \@thesis \par} %大きなタイトルが記載される部分
+		\vspace{10mm}
+		{\LARGE\bf \@title \par} % タイトル部分
+		\vspace{20mm}
+		{\Large 提出締切: 2014.01.09\par} % 提出年月日部分
+		\vspace{5mm}
+		{\Large 提出日:　 \@date \par} % 提出年月日部分
+		\vspace{20mm}
+		{\Large \@department \par} % 所属部分
+		\vspace{10mm}
+
+		{\Large\@id } % 学籍番号部分
+		{\Large \@author} % 氏名 
+	\end{center}
+\par\vskip 1.5em
+}
+
+\makeatother
+
+\title{第7回講義課題 課題番号20}
+\date{\todayd}
+\department{工学部電子情報工学科}
+\id{03-123006}
+\author{岩成達哉}
+
+
+\begin{document}
+
+\begin{titlepage}
+	\setlength{\topmargin}{1.1in}
+	\vspace{100mm}
+	\maketitle
+\end{titlepage}
+
+\begin{comment}
+ACO（アントコロニー・アルゴリズム）を 応用し、Nクィーン問題を解くプログラムを作成せよ。 　　
+各種パラメータ(ρ：フェロモンの蒸発率、もしあればα：TSPでの距離の重み指数に相当するパラメータなど）
+問題サイズ
+を様々に変化させ、実験結果を比較・考察すること。
+以下の論文などが参考になる。
+
+S. Khan et al.“Solution of n-Queen problem using ACO”. In proc. of 13th IEEE International Multi-topic Conference (INMIC 2009),2009.
+\end{comment}
+
+
+\section{概要}
+本レポートでは，アントコロニー最適化(ACO)を用いて，Nクイーン問題を解くプログラムを作成し，各種パラメータに依る探索の時間やステップの変化を調べた．
+
+
+
+% ----
+\section{ACOアルゴリズム}
+
+\subsection{概要}
+ACOアルゴリズムは，アリがホルモンを分泌することで，他のアリに道を示すという習性になぞらえたアルゴリズムである．アリは道の中で最も良い物に強くホルモンを残し，他のアリはそのホルモンを元に道を知ることができる．また，ときにはそのホルモンに従わないアリが現れることで，別の道を模索することができる．
+
+この習性を探索アルゴリズムとして用いることで，良い探索経路を多くたどるようになり，かつ，ときには新しい探索経路を調べることで，他に良い解がないか探すことができる．
+
+\subsection{手順}
+Nクイーン問題を解くACOとして，参考文献\cite{ref:aco}がある．この手法では，以下の手順で探索が進む．
+\begin{enumerate}
+	\item フェロモンの初期化を行う．フェロモンは$N^2\text{[移動元]} \times N^2 \text{[移動先]} $個だけ用意する． 
+	\item $N^2$個のマスに対して，アリを複数匹ランダムに設置する．このとき，同じマスに複数匹置いても良い．
+	\item アリを一匹ずつフェロモンを元に$N^2$個のマスに移動させる．このとき，今までいたことのあるマスには置けない．$i$番目のマスから$j$番目のマスに移動する確率は以下のようになる．ただし，$S$は今までいたことのないマスの集合，$\tau_{i,j}$は$i$番目のマスから$j$番目のマスへのフェロモン，$\zeta_{i,j}$は$i$番目のマスから$j$番目のマスへ行くヒューリスティックな評価値である．
+		\begin{eqnarray}
+			p_{i,j} = \frac{[\tau_{i,j}]^\alpha \cdot [\zeta_{i,j}]^\beta}{\sum_{k \in S} [\tau_{i,k}]^\alpha \cdot [\zeta_{i,k}]^\beta}
+		\end{eqnarray}
+		ヒューリスティックな評価値は，Nクイーン問題では例えば，「次にそのマスにアリを移動させることによってクイーンがいくつ死ぬか」などを与えることができる．
+	\label{enu:loop_ant}
+	\item \ref{enu:loop_ant}を$N-1$回繰り返す．
+	\item 一匹のアリが移動したマスを盤面に投影したものが一つのパターンとなる．全てのアリの経路に対して，解が得られているかを調べる．解でなかった場合は，そのアリが通過した経路すべてのフェロモンを更新する．Nクイーンでは例えば，アリが$i$番目のマスから$j$番目のマスへ移動していた場合，殺しあったクイーンの数を$L$，ある定数を$Q$とすると，
+		\begin{equation}
+			pheromone[i][j] \leftarrow pheromone[i][j] + \frac{Q}{L}
+		\end{equation}
+	と更新できる．
+	\label{enu:update_pheromone}
+	\item 全てのフェロモンを蒸発させる．ある定数$\rho$を使って，
+		\begin{equation}
+			pheromone[i][j] \leftarrow pheromone[i][j] \times \rho
+		\end{equation}
+		とあらわせる．これは，\ref{enu:update_pheromone}によってフェロモンが増え続けるのを防ぐ役割がある．
+\end{enumerate}
+
+
+
+
+% ---
+\section{プログラムの実行方法}
+プログラムはC言語で作成した．ソースコードのコンパイルは，Makefileによって行うことができる．具体的には，コマンドプロンプトを用いてソースコードのあるフォルダに移動してリスト\ref{code:make}のようにコマンドを実行すれば良い．
+\lstset{style=customplain}
+\begin{lstlisting}[caption={make},label=code:make]
+$ make
+\end{lstlisting}
+
+実行は，リスト\ref{code:execute}のように行う．Nには正の整数を与える．これが，Nクイーン問題の問題の大きさとなる．
+\begin{lstlisting}[caption={実行},label=code:execute]
+$ ./aco N
+\end{lstlisting}
+
+実行されると，Nクイーン問題の一つの解を探索し，結果を示す．解がない場合は無限ループとなるため，収束しない場合を含めて$1000$回のステップで終了するようにしている．
+
+
+
+% ---
+\section{実験方法}
+実験は，学科PC(Ubuntu 12.04 [Intel Core i7 @2.40GHz，8コア，メモリ 16GB]) によって行った．
+
+\subsection{$\rho$を変化させたときのステップ数}
+蒸発率$\rho$を変化させ，そのステップ数の変化をみた．実験方法は以下のとおりである．
+\begin{enumerate}
+	\item 
+	\item 
+\end{enumerate}
+
+
+% --
+\section{結論}
+本課題では，ACOアルゴリズムを用いて，Nクイーン問題の解を求めるプログラムを作成し，このアルゴリズムが確かに正しい解を求めること，パラメータによってその探索速度が異なることが確かめられた．
+
+
+
+
+\begin{thebibliography}{n}
+\bibitem{ref:aco}
+S. Khan et al.“Solution of n-Queen problem using ACO”. In proc. of 13th IEEE International Multi-topic Conference (INMIC 2009),2009.，\url{http://www.iba.t.u-tokyo.ac.jp/~iba/AI/khan.pdf}
+
+
+\end{thebibliography}
+
+
+\appendix
+\section{ソースリスト}
+
+ソースのリストを以下に示した．
+
+\begin{itemize}
+	\item Makefile \\
+		makeをするためのファイル
+	\item util.c / util.h \\
+		汎用的に用いる関数群．メモリの確保などを含んでいる．
+	\item aco.c / aco.h \\
+		Nクイーン問題を解く，ACOアルゴリズムを実装したもの．
+	\item main.c \\
+		ACOアルゴリズムを呼び出すメイン関数．問題の大きさを入力するなどの機能を持つ．．
+\end{itemize}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
