@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.1415926-p3.3-110825-2.4 (utf8.euc) (TeX Live 2012) (format=platex 2013.6.29)  9 JAN 2014 15:46
+This is e-pTeX, Version 3.1415926-p3.3-110825-2.4 (utf8.euc) (TeX Live 2012) (format=platex 2013.6.29)  9 JAN 2014 21:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -763,28 +763,43 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txtt on input line 144
+LaTeX Font Info:    Try loading font information for OT1+txtt on input line 148
 .
  (/usr/local/texlive/2012/texmf-dist/tex/latex/txfonts/ot1txtt.fd
 File: ot1txtt.fd 2000/12/15 v3.1
 )
-[1]
-LaTeX Font Info:    Try loading font information for OMS+txr on input line 184.
+[1] [2]
+File: image/rho.eps Graphic file (type eps)
+ <image/rho.eps> [3]
+File: image/alpha.eps Graphic file (type eps)
+ <image/alpha.eps>
+File: image/beta.eps Graphic file (type eps)
+ <image/beta.eps> [4]
+File: image/unresolved_rho.eps Graphic file (type eps)
 
- (/usr/local/texlive/2012/texmf-dist/tex/latex/txfonts/omstxr.fd
+<image/unresolved_rho.eps>
+File: image/unresolved_alpha.eps Graphic file (type eps)
+ <image/unresolved_alpha.eps>
+File: image/unresolved_beta.eps Graphic file (type eps)
+
+<image/unresolved_beta.eps> [5] [6]
+LaTeX Font Info:    Try loading font information for OMS+txr on input line 300.
+
+
+(/usr/local/texlive/2012/texmf-dist/tex/latex/txfonts/omstxr.fd
 File: omstxr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OMS/txr/m/n' in size <10> not available
-(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 184.
- [2]
+(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 300.
+ [7] [8]
 (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 4880 strings out of 494059
- 68078 string characters out of 3156205
- 134943 words of memory out of 3000000
- 8193 multiletter control sequences out of 15000+200000
- 25676 words of font info for 86 fonts, out of 3000000 for 9000
+ 4941 strings out of 494059
+ 68901 string characters out of 3156205
+ 136045 words of memory out of 3000000
+ 8246 multiletter control sequences out of 15000+200000
+ 34949 words of font info for 118 fonts, out of 3000000 for 9000
  745 hyphenation exceptions out of 8191
- 33i,7n,38p,390b,1003s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 33i,7n,38p,568b,1613s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on report.dvi (3 pages, 10156 bytes).
+Output written on report.dvi (9 pages, 28420 bytes).

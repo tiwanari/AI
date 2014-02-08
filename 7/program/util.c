@@ -50,19 +50,3 @@ double get_rand()
 {
 	return rand() / (double) RAND_MAX;
 }
-
-/**
- * 累乗を返す
- * @param num 掛ける値
- * @param times 掛ける回数
- * @return double 結果
- */
-double ipow(double num, int times)
-{
-	double res = 1.0;
-	int i;
-
-	for (i = 0; i < times; i++)
-		res *= num;
-	return res;
-}

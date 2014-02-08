@@ -59,6 +59,7 @@ int count_die(const int* route, const int n)
 	const int killed = 1;
 
 	for (i = 0; i < n; i++) {
+		int flag = 0;
 		// すでに死んでいるなら飛ばす
 		if (dies[i] == killed) {
 			count++;
@@ -72,7 +73,9 @@ int count_die(const int* route, const int n)
 			// 縦，横，斜めにあるか
 			if (row0 == row1 || col0 == col1 || abs(row0 - row1) == abs(col0 - col1)) {
 				dies[i] = dies[j] = killed;	// 死んだとする
-				count++;
+				if (!flag)
+					count++;
+				flag = 1;
 			}
 		}
 	}
@@ -204,7 +207,7 @@ int check_list(int** list)
 	for (i = 0; i < N_ANT; i++) {
 		int ndie = count_die(list[i], N);
 		if (ndie == 0) {
-			// show_result(list[i]);
+			show_result(list[i]);
 			return 1;
 		}
 		update_pheromone(list[i], ndie);	// フェロモンの更新

@@ -2,21 +2,16 @@
 #include <stdlib.h>
 #include "aco.h"
 
-#define NTRY 100
-
 int main(int argc, char **argv)
 {
 	int N;
 	double RHO;
 	double ALPHA;
 	double BETA;
-	int unresolved = 0;
-	int i;
-	int sum = 0;
-
+	int res;
 
 	if (argc < 2) {
-		fprintf(stderr, "Usage: %s N\n", argv[0]);
+		fprintf(stderr, "Usage: %s N [RHO] [ALPHA] [BETA]\n", argv[0]);
 		exit(1);
 	}
 	N = atoi(argv[1]);
@@ -24,15 +19,12 @@ int main(int argc, char **argv)
 	ALPHA = argc > 3 ? atof(argv[3]) : 1.0;
 	BETA = argc > 4 ? atof(argv[4]) : 1.0;
 
-	for (i = 0; i < 100; i++) {
-		int res;
-		if ((res = aco(N, RHO, ALPHA, BETA)) == -1)
-			unresolved++;
-		else
-			sum += res;
-	}
+	printf("N = %d, rho = %f, alpha = %f, beta = %f\n", N, RHO, ALPHA, BETA);
 
-	printf("%f %f\n", RHO, (double)sum / NTRY);
-	fprintf(stderr, "%d %d\n", N, unresolved);
+	if ((res = aco(N, RHO, ALPHA, BETA)) == -1)
+		printf("unresolved\n");
+	else
+		printf("in %d steps\n", res);
+
 	return 0;
 }
